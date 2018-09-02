@@ -13,10 +13,9 @@ public class DBUtil {
 
 	// Returns connection object;
 	public static Connection establishConnection() throws SQLException {
-
-		conn = DriverManager.getConnection(
-				"jdbc:oracle:thin:@10.219.34.3:1521:orcl", "trg224",
-				"training224");
+		conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "root");
+		// conn = DriverManager.getConnection("jdbc:oracle:thin:@10.219.34.3:1521:orcl",
+		// "trg224", "training224");
 		return conn;
 	}
 

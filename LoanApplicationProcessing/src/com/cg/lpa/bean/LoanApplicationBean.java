@@ -1,24 +1,18 @@
 package com.cg.lpa.bean;
 
-/**
- * @author rabbhi
- *
- */
-import java.time.LocalDate;
-
 public class LoanApplicationBean {
 
 	private int applicationId;
-	private LocalDate applicationDate;
+	private String applicationDate;
 	private String loanProgram;
 	private double loanAmount;
 	private String propertyAddress;
 	private double annualFamilyIncome;
 	private String docsProof;
-	private String guaranteeCoverString;
+	private String guaranteeCover;
 	private double marktValOfCover;
 	private String status;
-	private LocalDate interviewDate;
+	private String interviewDate;
 
 	public int getApplicationId() {
 		return applicationId;
@@ -28,11 +22,11 @@ public class LoanApplicationBean {
 		this.applicationId = applicationId;
 	}
 
-	public LocalDate getApplicationDate() {
+	public String getApplicationDate() {
 		return applicationDate;
 	}
 
-	public void setApplicationDate(LocalDate applicationDate) {
+	public void setApplicationDate(String applicationDate) {
 		this.applicationDate = applicationDate;
 	}
 
@@ -76,12 +70,12 @@ public class LoanApplicationBean {
 		this.docsProof = docsProof;
 	}
 
-	public String getGuaranteeCoverString() {
-		return guaranteeCoverString;
+	public String getGuaranteeCover() {
+		return guaranteeCover;
 	}
 
-	public void setGuaranteeCoverString(String guaranteeCoverString) {
-		this.guaranteeCoverString = guaranteeCoverString;
+	public void setGuaranteeCover(String guaranteeCover) {
+		this.guaranteeCover = guaranteeCover;
 	}
 
 	public double getMarktValOfCover() {
@@ -100,11 +94,11 @@ public class LoanApplicationBean {
 		this.status = status;
 	}
 
-	public LocalDate getInterviewDate() {
+	public String getInterviewDate() {
 		return interviewDate;
 	}
 
-	public void setInterviewDate(LocalDate interviewDate) {
+	public void setInterviewDate(String interviewDate) {
 		this.interviewDate = interviewDate;
 	}
 
@@ -112,19 +106,31 @@ public class LoanApplicationBean {
 
 	}
 
-	public LoanApplicationBean(int applicationId, String loanProgram,
-			double loanAmount, String propertyAddress,
-			double annualFamilyIncome, String docsProof,
-			String guaranteeCoverString, double marktValOfCover, String status,
-			LocalDate interviewDate) {
+	public LoanApplicationBean(String loanProgram, double loanAmount, String propertyAddress, double annualFamilyIncome,
+			String docsProof, String guaranteeCover, double marktValOfCover) {
 		super();
-		this.applicationId = applicationId;
 		this.loanProgram = loanProgram;
 		this.loanAmount = loanAmount;
 		this.propertyAddress = propertyAddress;
 		this.annualFamilyIncome = annualFamilyIncome;
 		this.docsProof = docsProof;
-		this.guaranteeCoverString = guaranteeCoverString;
+		this.guaranteeCover = guaranteeCover;
+		this.marktValOfCover = marktValOfCover;
+
+	}
+
+	public LoanApplicationBean(int applicationId, String applicationDate, String loanProgram, double loanAmount,
+			String propertyAddress, double annualFamilyIncome, String docsProof, String guaranteeCover,
+			double marktValOfCover, String status, String interviewDate) {
+		super();
+		this.applicationId = applicationId;
+		this.applicationDate = applicationDate;
+		this.loanProgram = loanProgram;
+		this.loanAmount = loanAmount;
+		this.propertyAddress = propertyAddress;
+		this.annualFamilyIncome = annualFamilyIncome;
+		this.docsProof = docsProof;
+		this.guaranteeCover = guaranteeCover;
 		this.marktValOfCover = marktValOfCover;
 		this.status = status;
 		this.interviewDate = interviewDate;
@@ -132,14 +138,11 @@ public class LoanApplicationBean {
 
 	@Override
 	public String toString() {
-		return "LoanApplicationBean [applicationId=" + applicationId
-				+ ", applicationDate=" + applicationDate + ", loanProgram="
-				+ loanProgram + ", loanAmount=" + loanAmount
-				+ ", propertyAddress=" + propertyAddress
-				+ ", annualFamilyIncome=" + annualFamilyIncome + ", docsProof="
-				+ docsProof + ", guaranteeCoverString=" + guaranteeCoverString
-				+ ", marktValOfCover=" + marktValOfCover + ", status=" + status
-				+ ", interviewDate=" + interviewDate + "]";
+		return "LoanApplicationBean [applicationId=" + applicationId + ", applicationDate=" + applicationDate
+				+ ", loanProgram=" + loanProgram + ", loanAmount=" + loanAmount + ", propertyAddress=" + propertyAddress
+				+ ", annualFamilyIncome=" + annualFamilyIncome + ", docsProof=" + docsProof + ", guaranteeCoverString="
+				+ guaranteeCover + ", marktValOfCover=" + marktValOfCover + ", status=" + status + ", interviewDate="
+				+ interviewDate + "]";
 	}
 
 }

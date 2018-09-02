@@ -1,15 +1,10 @@
-package com.cg.lpa.service;
+package com.cg.lpa.dao;
 
 import com.cg.lpa.bean.CustomerDetailsBean;
 import com.cg.lpa.bean.LoanApplicationBean;
 import com.cg.lpa.test.LoanProcessingException;
 
-public interface ICustomerService {
-
-	/*
-	 * TODO : View All Loan Programs. TODO : Apply For a Loan Program. TODO :
-	 * View Application Status by entering application id.
-	 */
+public interface ICustomerDao {
 
 	public boolean applyLoan(LoanApplicationBean loanapplication)
 			throws LoanProcessingException;
@@ -18,6 +13,6 @@ public interface ICustomerService {
 			throws LoanProcessingException;
 
 	public String viewApplicationStatus(int applicationID)
-			throws LoanProcessingException;
+			throws LoanProcessingException;;
 
 }

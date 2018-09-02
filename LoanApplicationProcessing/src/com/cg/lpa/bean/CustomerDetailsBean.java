@@ -3,7 +3,7 @@
  */
 package com.cg.lpa.bean;
 
-import java.time.LocalDate;
+//import java.time.String;
 
 /**
  * @author rabbhi
@@ -13,7 +13,7 @@ public class CustomerDetailsBean {
 
 	private int applicationId;
 	private String applicantName;
-	private LocalDate dateOfBirth;
+	private String dateOfBirth;
 	private String maritalStatus;
 	private long phoneNumber;
 	private long mobileNumber;
@@ -36,11 +36,11 @@ public class CustomerDetailsBean {
 		this.applicantName = applicantName;
 	}
 
-	public LocalDate getDateOfBirth() {
+	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(LocalDate dateOfBirth) {
+	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -89,7 +89,7 @@ public class CustomerDetailsBean {
 	}
 
 	public CustomerDetailsBean(int applicationId, String applicantName,
-			LocalDate dateOfBirth, String maritalStatus, long phoneNumber,
+			String dateOfBirth, String maritalStatus, long phoneNumber,
 			long mobileNumber, int dependentsCount, String emailId) {
 		super();
 		this.applicationId = applicationId;

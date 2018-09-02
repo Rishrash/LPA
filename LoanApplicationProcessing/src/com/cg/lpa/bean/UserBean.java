@@ -2,15 +2,15 @@ package com.cg.lpa.bean;
 
 public class UserBean {
 
-	private int userId;
+	private String userId;
 	private String password;
 	private String role;
 
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
@@ -31,9 +31,10 @@ public class UserBean {
 	}
 
 	public UserBean() {
+
 	}
 
-	public UserBean(int userId, String password, String role) {
+	public UserBean(String userId, String password, String role) {
 		super();
 		this.userId = userId;
 		this.password = password;
