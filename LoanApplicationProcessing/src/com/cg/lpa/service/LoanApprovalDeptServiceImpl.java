@@ -19,11 +19,11 @@ public class LoanApprovalDeptServiceImpl implements ILoanApprovalDeptService {
 	}
 
 	@Override
-	public boolean modifyApplicationStatus(LoanApplicationBean loanapplication)
+	public boolean modifyApplicationStatus(int applicationId, String newStatus)
 			throws LoanProcessingException {
 		ladDao = new LoanApprovalDeptDaoImpl();
 
-		return ladDao.modifyApplicationStatus(loanapplication);
+		return ladDao.modifyApplicationStatus(applicationId, newStatus);
 	}
 
 }

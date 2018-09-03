@@ -106,7 +106,8 @@ public class LoanApplicationBean {
 
 	}
 
-	public LoanApplicationBean(String loanProgram, double loanAmount, String propertyAddress, double annualFamilyIncome,
+	public LoanApplicationBean(String loanProgram, double loanAmount,
+			String propertyAddress, double annualFamilyIncome,
 			String docsProof, String guaranteeCover, double marktValOfCover) {
 		super();
 		this.loanProgram = loanProgram;
@@ -119,8 +120,9 @@ public class LoanApplicationBean {
 
 	}
 
-	public LoanApplicationBean(int applicationId, String applicationDate, String loanProgram, double loanAmount,
-			String propertyAddress, double annualFamilyIncome, String docsProof, String guaranteeCover,
+	public LoanApplicationBean(int applicationId, String applicationDate,
+			String loanProgram, double loanAmount, String propertyAddress,
+			double annualFamilyIncome, String docsProof, String guaranteeCover,
 			double marktValOfCover, String status, String interviewDate) {
 		super();
 		this.applicationId = applicationId;
@@ -138,11 +140,14 @@ public class LoanApplicationBean {
 
 	@Override
 	public String toString() {
-		return "LoanApplicationBean [applicationId=" + applicationId + ", applicationDate=" + applicationDate
-				+ ", loanProgram=" + loanProgram + ", loanAmount=" + loanAmount + ", propertyAddress=" + propertyAddress
-				+ ", annualFamilyIncome=" + annualFamilyIncome + ", docsProof=" + docsProof + ", guaranteeCoverString="
-				+ guaranteeCover + ", marktValOfCover=" + marktValOfCover + ", status=" + status + ", interviewDate="
-				+ interviewDate + "]";
+		return "LoanApplicationBean [applicationId=" + applicationId
+				+ ", applicationDate=" + applicationDate + ", loanProgram="
+				+ loanProgram + ", loanAmount=" + loanAmount
+				+ ", propertyAddress=" + propertyAddress
+				+ ", annualFamilyIncome=" + annualFamilyIncome + ", docsProof="
+				+ docsProof + ", guaranteeCoverString=" + guaranteeCover
+				+ ", marktValOfCover=" + marktValOfCover + ", status=" + status
+				+ ", interviewDate=" + interviewDate + "]";
 	}
 
 }

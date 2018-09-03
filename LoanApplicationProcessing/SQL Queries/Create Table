@@ -1,0 +1,122 @@
+--CREATE  seq_app_id SEQUENCE
+CREATE SEQUENCE seq_app_id 
+START WITH 1000
+INCREMENT BY 1;
+
+
+
+--CREATE loan_application TABLE
+CREATE TABLE loan_application(
+application_id NUMBER(5)  PRIMARY KEY,
+application_date DATE NOT NULL, 
+loan_program VARCHAR2(10),
+amount_of_loan NUMBER NOT NULL,
+address_of_property VARCHAR2(30) NOT NULL,
+annual_family_income NUMBER NOT NULL,
+doc_proof_available VARCHAR2(50) NOT NULL,
+guarantee_cover VARCHAR2(20) NOT NULL,
+market_val_of_cover NUMBER NOT NULL,
+status VARCHAR2(10)  DEFAULT 'applied',
+date_of_interview DATE, 
+FOREIGN KEY (loan_program) REFERENCES loan_programs_offered(loan_program));
+
+ DROP TABLE loan_application;
+ 
+ 
+ 
+ 
+--CREATE customer_details TABLE
+CREATE TABLE customer_details(
+application_id NUMBER UNIQUE,
+applicant_name VARCHAR2(20) NOT NULL,
+date_of_birth DATE,
+marital_status VARCHAR2(10),
+phone_number NUMBER,
+mobile_number NUMBER,
+count_of_dependents NUMBER,
+email_id VARCHAR2(20),
+PRIMARY KEY (application_id,applicant_name),
+FOREIGN KEY (application_id) REFERENCES loan_application(application_id) );
+
+DROP TABLE customer_details;
+
+
+
+
+--CREATE loan_programs_offered TABLE
+CREATE TABLE loan_programs_offered(
+loan_program VARCHAR2(5) PRIMARY KEY,
+description VARCHAR2(20),
+type VARCHAR2(20),
+duration_in_years NUMBER,
+min_loan_amount NUMBER,
+max_loan_amount NUMBER;
+rate_of_interest NUMBER,
+proofs_required VARCHAR2(20)  );
+
+DROP TABLE loan_programs_offered;
+
+
+
+
+--CREATE approved_loans TABLE
+CREATE TABLE approved_loans(
+application_id NUMBER(5),
+customer_name VARCHAR2(20),
+amnt_of_loan_grant NUMBER,
+monthly_installment NUMBER,
+years_time_period NUMBER,
+down_payment NUMBER,
+rate_of_interest NUMBER,
+total_amount_payable NUMBER,
+PRIMARY KEY (application_id,customer_name),
+FOREIGN KEY (application_id) REFERENCES loan_application(application_id) );
+
+DROP TABLE approved_loans;
+
+
+
+--CREATE USER TABLE
+CREATE TABLE users(
+login_id VARCHAR2(5),
+password VARCHAR2(10),
+role VARCHAR2(5) 
+);
+
+
+
+
+--INSERT INTO loan_programs_offered
+INSERT INTO loan_programs_offered VALUES('HomeL', 'This is a home loan', 'Purchase', 2, 500000, 10000000, 9.5, 'Property Docs,Id');
+INSERT INTO loan_programs_offered VALUES('EduL', 'This is Edu loan', 'Extension', 5, 200000, 1000000, 8, 'Edu Certificates');
+INSERT INTO loan_programs_offered VALUES('CarL', 'This is Car loan', 'Purchase', 5, 300000, 1500000, 8, 'Id Certificates');
+
+
+
+--INSERT INTO loan_application
+INSERT INTO  loan_application(application_id, application_date, loan_program, amount_of_loan, address_of_property, annual_family_income, doc_proof_available, guarantee_cover, market_val_of_cover, date_of_interview) VALUES(1001,SYSDATE,'HomeL',6000000,'Navalur','500000','Property Papers','Covers Property','8000000', '15-OCT,2018');
+INSERT INTO  loan_application(application_id, application_date, loan_program, amount_of_loan, address_of_property, annual_family_income, doc_proof_available, guarantee_cover, market_val_of_cover, date_of_interview) VALUES(1002,SYSDATE,'CarL',400000,'Delhi','800000','Collateral Papers','Covers Collatral','1000000', '25-OCT,2018');
+INSERT INTO  loan_application(application_id, application_date, loan_program, amount_of_loan, address_of_property, annual_family_income, doc_proof_available, guarantee_cover, market_val_of_cover, date_of_interview) VALUES(1003,SYSDATE,'EduL',300000,'Mumbai','400000','Education Docs','Covers Edu Docs','500000', '1-NOV,2018');
+
+
+--INSERT INTO approved_loans
+INSERT INTO approved_loans VALUES(1001,'Ramesh',580000, 7500, 2,50000,7.5, 850000);
+INSERT INTO approved_loans VALUES(1002,'Suresh',950000, 4400, 5,75000,6.5, 1100000);
+INSERT INTO approved_loans VALUES(1003,'Vinod',400000, 5550, 5,100000,9.5,500000);
+
+
+
+--INSERT INTO customer_details
+INSERT INTO customer_details VALUES(1001,'Ramesh','11-JUN-1985','MARRIED',2476846,8956487516,5,'ramesh12@gmail.com');
+INSERT INTO customer_details VALUES(1002,'Suresh','31-JAN-1992','SINGLE',2568745,7689545896,2,'Suresh458@gmail.com');
+INSERT INTO customer_details VALUES(1003,'Vinod','16-MAR-1989','MARRIED',5014789,9888156587,4,'vinodkum23@gmail.com');
+
+
+
+
+--INSERT INTO Users
+INSERT INTO users VALUES('1001', 'admin1','admin');
+INSERT INTO users VALUES('2001', 'lad1','lad');
+
+-- LINK FOR USING LOCAL DATE & SQL DATE 
+--http://www.javabrahman.com/quick-tips/java-8-how-to-convert-string-to-localdate-and-localdate-to-string-in-specific-format/ 

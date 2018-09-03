@@ -20,14 +20,16 @@ public class CustomerDaoImpl implements ICustomerDao {
 	ResultSet rs = null;
 
 	@Override
-	public boolean applyLoan(LoanApplicationBean loanapplication) throws LoanProcessingException {
+	public boolean applyLoan(LoanApplicationBean loanapplication)
+			throws LoanProcessingException {
 
 		int status;
 		try {
 
 			conn = DBUtil.establishConnection();
 
-			pstmt = conn.prepareStatement(IQueryMapper.INSERT_LOAN_APPLICATION_DETAILS);
+			pstmt = conn
+					.prepareStatement(IQueryMapper.INSERT_LOAN_APPLICATION_DETAILS);
 
 			pstmt.setString(1, loanapplication.getLoanProgram());
 			pstmt.setDouble(2, loanapplication.getLoanAmount());
@@ -41,7 +43,8 @@ public class CustomerDaoImpl implements ICustomerDao {
 			if (status == 1) {
 
 				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(IQueryMapper.GET_CURRENT_APPLICATION_ID);
+				ResultSet rs = stmt
+						.executeQuery(IQueryMapper.GET_CURRENT_APPLICATION_ID);
 				while (rs.next()) {
 					loanapplication.setApplicationId(rs.getInt(1));
 				}
@@ -60,7 +63,8 @@ public class CustomerDaoImpl implements ICustomerDao {
 	}
 
 	@Override
-	public boolean fillCustomerDetails(CustomerDetailsBean customer) throws LoanProcessingException {
+	public boolean fillCustomerDetails(CustomerDetailsBean customer)
+			throws LoanProcessingException {
 
 		int status;
 		try {
@@ -91,16 +95,18 @@ public class CustomerDaoImpl implements ICustomerDao {
 	}
 
 	@Override
-	public String viewApplicationStatus(int applicationId) throws LoanProcessingException {
+	public String viewApplicationStatus(int applicationId)
+			throws LoanProcessingException {
 		String applicationStatus = null;
 		try {
 			conn = DBUtil.establishConnection();
 
-			pstmt = conn.prepareStatement("SELECT status FROM loan_application WHERE application_id = ?");
+			pstmt = conn
+					.prepareStatement(IQueryMapper.GET_STATUS_FOR_LOAN_APPLICATION);
 			pstmt.setInt(1, applicationId);
-			// Statement stmt = conn.createStatement();
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
+			Statement stmt = conn.createStatement();
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
 				applicationStatus = rs.getString(1);
 			}
 		} catch (SQLException e) {

@@ -12,8 +12,12 @@ public interface IQueryMapper {
 			+ " date_of_interview) VALUES (seq_app_id.NEXTVAL,SYSDATE,?,?,?,?,?,?,?,SYSDATE+7)";
 	public static final String GET_CURRENT_APPLICATION_ID = "SELECT seq_app_id.CURRVAL FROM DUAL";
 	public static final String INSERT_CUSTOMER_DETAILS = "INSERT INTO CUSTOMER_DETAILS VALUES(?,?,?,?,?,?,?,?)";
+	public static final String GET_STATUS_FOR_LOAN_APPLICATION = "SELECT status FROM loan_application WHERE application_id = ?";
 
 	// QUERIES FOR LOAN APPROVAL DEPARTMENT
-	public static final String GET_LOAN_APPLICATION_STATUS = "SELECT status FROM loan_application WHERE application_id = ?";
+	public static final String GET_LOAN_APPLICATION_FOR_SPECIFIC_PROGRAM = "SELECT * FROM loan_application WHERE loan_program = ?";
+	public static final String UPDATE_APPLICATION_STATUS = "UPDATE loan_application SET status = ? WHERE application_id = ? ";
+
+	// QUERIES FOR ADMIN
 
 }

@@ -21,7 +21,7 @@ public class LoanApprovalDeptDaoImpl implements ILoanApprovalDeptDao {
 		ArrayList<LoanApplicationBean> loanApplicationList = new ArrayList();
 		try {
 			conn = DBUtil.establishConnection();
-			pstmt = conn.prepareStatement("SELECT * FROM loan_application WHERE loan_program = ?");
+			pstmt = conn.prepareStatement(IQueryMapper.GET_LOAN_APPLICATION_FOR_SPECIFIC_PROGRAM);
 			pstmt.setString(1, loanProgram);
 			rs = pstmt.executeQuery();
 
@@ -40,9 +40,21 @@ public class LoanApprovalDeptDaoImpl implements ILoanApprovalDeptDao {
 	}
 
 	@Override
-	public boolean modifyApplicationStatus(LoanApplicationBean loanapplication) throws LoanProcessingException {
+	public boolean modifyApplicationStatus(int applicationId, String newStatus) throws LoanProcessingException {
+		try {
+			conn = DBUtil.establishConnection();
+			pstmt = conn.prepareStatement(IQueryMapper.UPDATE_APPLICATION_STATUS);
+			pstmt.setString(1, newStatus);
+			pstmt.setInt(2, applicationId);
+			int status = pstmt.executeUpdate();
+			if (status == 1) {
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			throw new LoanProcessingException("Error in " + e.getMessage());
+		}
 
-		return false;
 	}
 
 }

@@ -16,7 +16,7 @@ public interface ILoanApprovalDeptService {
 	public ArrayList<LoanApplicationBean> viewLoanApplicationForSpecificProgram(
 			String loanProgram) throws LoanProcessingException;
 
-	public boolean modifyApplicationStatus(LoanApplicationBean loanapplication)
+	public boolean modifyApplicationStatus(int applicationId, String newStatus)
 			throws LoanProcessingException;
 
 }

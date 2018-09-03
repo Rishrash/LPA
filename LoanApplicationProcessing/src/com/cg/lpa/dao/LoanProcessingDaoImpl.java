@@ -22,7 +22,8 @@ public class LoanProcessingDaoImpl implements ILoanProcessingDao {
 	// User login class
 
 	@Override
-	public int loginUser(String userId, String password) throws LoanProcessingException {
+	public int loginUser(String userId, String password)
+			throws LoanProcessingException {
 		String type = "";
 		int n = -1;
 
@@ -52,7 +53,8 @@ public class LoanProcessingDaoImpl implements ILoanProcessingDao {
 	}
 
 	@Override
-	public ArrayList<LoanProgramOfferedBean> viewLoanProgramsOffered() throws LoanProcessingException {
+	public ArrayList<LoanProgramOfferedBean> viewLoanProgramsOffered()
+			throws LoanProcessingException {
 		ArrayList<LoanProgramOfferedBean> loanProgramList = new ArrayList();
 		try {
 			conn = DBUtil.establishConnection();
@@ -61,12 +63,13 @@ public class LoanProcessingDaoImpl implements ILoanProcessingDao {
 			rst = stmt.executeQuery(IQueryMapper.GET_LOAN_PROGRAMS_OFFERED);
 
 			while (rst.next()) {
-				LoanProgramOfferedBean loanProgram = new LoanProgramOfferedBean(rst.getString(1), rst.getString(2),
-						rst.getString(3), rst.getInt(4), rst.getDouble(5), rst.getDouble(6), rst.getDouble(7),
-						rst.getString(8));
+				LoanProgramOfferedBean loanProgram = new LoanProgramOfferedBean(
+						rst.getString(1), rst.getString(2), rst.getString(3),
+						rst.getInt(4), rst.getDouble(5), rst.getDouble(6),
+						rst.getDouble(7), rst.getString(8));
 				loanProgramList.add(loanProgram);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			throw new LoanProcessingException("Error in " + e.getMessage());
 		}
 

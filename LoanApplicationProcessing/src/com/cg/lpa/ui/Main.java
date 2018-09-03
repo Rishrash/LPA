@@ -7,7 +7,9 @@ import java.util.Scanner;
 import com.cg.lpa.bean.CustomerDetailsBean;
 import com.cg.lpa.bean.LoanApplicationBean;
 import com.cg.lpa.bean.LoanProgramOfferedBean;
+import com.cg.lpa.service.AdminServiceImpl;
 import com.cg.lpa.service.CustomerServiceImpl;
+import com.cg.lpa.service.IAdminService;
 import com.cg.lpa.service.ICustomerService;
 import com.cg.lpa.service.ILoanApprovalDeptService;
 import com.cg.lpa.service.ILoanProcessingService;
@@ -22,6 +24,7 @@ public class Main {
 	static ILoanProcessingService loanProcessingService = null;
 	static ICustomerService customerService = null;
 	static ILoanApprovalDeptService ladService = null;
+	static IAdminService adminService = null;
 
 	// MAIN METHOD
 	public static void main(String[] args) throws LoanProcessingException {
@@ -224,7 +227,6 @@ public class Main {
 	// ================================================================
 	private static void enteredAsMemberOfBoard() {
 		System.out.println("Welcome Member Of Loan Approval Department\n");
-		ladService = new LoanApprovalDeptServiceImpl();
 		System.out.println("Select Options from Given menu");
 		System.out.println("1. View all Loan Programs");
 		System.out.println("2. View All loan Applications for specific loan program");
@@ -268,6 +270,36 @@ public class Main {
 
 				break;
 			case 3:
+				int applicationId = 0;
+				String newStatus = null;
+				System.out.println("Enter application id to update application status");
+				applicationId = input.nextInt();
+				System.out.println("Select new status");
+				System.out.println("1. Accepted");
+				System.out.println("2. Approved");
+				System.out.println("3. Rejected");
+				int statusChoice = input.nextInt();
+				switch (statusChoice) {
+				case 1:
+					newStatus = "Accepted";
+					break;
+				case 2:
+					newStatus = "Approved";
+					break;
+				case 3:
+					newStatus = "Rejected";
+					break;
+				default:
+					System.out.println("Invalid choice");
+					enteredAsMemberOfBoard();
+				}
+				boolean isStatusUpdated = ladService.modifyApplicationStatus(applicationId, newStatus);
+				if (isStatusUpdated == true) {
+					System.out.println(
+							"Application status for application id " + applicationId + " was successfully updated");
+				} else {
+					System.out.println("There was a problem in updating application status");
+				}
 				break;
 			case 4:
 				startTheProgram();
@@ -286,6 +318,8 @@ public class Main {
 			System.err.println("Error is in :" + e.getMessage());
 		}
 	}
+
+	// Display Loan Application For Specific Loan Program
 
 	public static boolean displayLoanApplication(String loanProgram) throws LoanProcessingException {
 		boolean checkIfListIsEmpty = false;
@@ -309,19 +343,110 @@ public class Main {
 	}
 
 	// ================================================================
-	// =
-	// =3. When User has Entered As a Admin
-	// =
+	// 3. When User has Entered As a Admin
 	// ================================================================
 
 	private static void enteredAsAdmin() {
 		System.out.println("Welcome Admin");
+
+		System.out.println("Select Options from menu");
+		System.out.println("1. View all Loan Programs");
+		System.out.println("2. Update Loan Program");
+		System.out.println("3. View List of Loan Applications Approved/Accepted");
+		System.out.println("4. Previous Page");
+		System.out.println("5. Exit");
+		try {
+			adminService = new AdminServiceImpl();
+			int adminChoice = input.nextInt();
+			switch (adminChoice) {
+			case 1:
+				if (displayLoanPrograms()) {
+					System.out.println("No Record Found");
+				}
+				break;
+			case 2:
+				System.out.println("Select option :-");
+				System.out.println("1. Add a Loan Program");
+				System.out.println("2. Delete a Loan Program");
+				int loanProgramUpdateChoice = input.nextInt();
+				switch (loanProgramUpdateChoice) {
+				case 1:
+					System.out.println("Enter Loan Program Name");
+					String loanProgramString = input.next();
+					System.out.println("Enter Loan Program Description");
+					String description = inputString.nextLine();
+					System.out.println("Specify Loan type");
+					String loanType = input.next();
+					System.out.println("Loan Program duration in years");
+					int durationInYears = input.nextInt();
+					System.out.println("Minimum Loan Amount");
+					double minLoanAmnt = input.nextDouble();
+					System.out.println("Maximum Loan Amount");
+					double maxLoanAmnt = input.nextDouble();
+					System.out.println("Rate of intrest on Loan");
+					double rateOfIntrest = input.nextDouble();
+					System.out.println("Mention all the proofs Required");
+					String proofReq = inputString.nextLine();
+
+					LoanProgramOfferedBean newLoanProgram = new LoanProgramOfferedBean(loanProgramString, description,
+							loanType, durationInYears, minLoanAmnt, maxLoanAmnt, rateOfIntrest, proofReq);
+
+					boolean b = adminService.addLoanProgram(newLoanProgram);
+					if (b) {
+						System.out.println("YEaaah");
+					} else {
+						System.out.println("Nooooo");
+					}
+					break;
+				case 2:
+					// adminService.deleteLoanProgram(loanProgram);
+					break;
+				default:
+					System.out.println("Invalid Choice ");
+					enteredAsAdmin();
+				}
+				break;
+			case 3:
+				System.out.println("1. View Loan Applications for Accepted Loan");
+				System.out.println("2. View Loan Applicatoins for Approved Loan");
+				ArrayList<LoanApplicationBean> loanApplication = null;
+				String loanApplicationStatus = null;
+				int loanApplicationStatusChoice = input.nextInt();
+				switch (loanApplicationStatusChoice) {
+				case 1:
+					loanApplicationStatus = "Accepted";
+					break;
+				case 2:
+					loanApplicationStatus = "Approved";
+					break;
+				default:
+					System.out.println("Invalid Choice ");
+					enteredAsAdmin();
+				}
+				loanApplication = adminService.viewLoanApplicationForSpecificStatus(loanApplicationStatus);
+				break;
+			case 4:
+				startTheProgram();
+			case 5:
+				System.out.println("Have a Nice Day :-) ");
+				System.exit(0);
+				break;
+			default:
+				System.out.println("Invalid Choice ");
+				enteredAsAdmin();
+
+			}
+		} catch (InputMismatchException e) {
+			System.err.println("Error is in :" + e.getMessage());
+		} catch (Exception e) {
+			System.err.println("Error is in :" + e.getMessage());
+
+		}
+
 	}
 
 	// ================================================================
-	// = =
-	// = 3. Common methods =
-	// = =
+	// 4. Common methods
 	// ================================================================
 	private static boolean displayLoanPrograms() throws LoanProcessingException {
 		boolean checkIfListIsEmpty = false;
