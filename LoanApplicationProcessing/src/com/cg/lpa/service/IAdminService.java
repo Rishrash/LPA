@@ -7,10 +7,6 @@ import com.cg.lpa.bean.LoanProgramOfferedBean;
 import com.cg.lpa.test.LoanProcessingException;
 
 public interface IAdminService {
-	/*
-	 * TODO : Update Info Of Long Program TODO : View List of loan applications
-	 * approved/accepted (waiting for interview)/rejected for a loan program.
-	 */
 
 	public boolean addLoanProgram(LoanProgramOfferedBean loanProgram)
 			throws LoanProcessingException;

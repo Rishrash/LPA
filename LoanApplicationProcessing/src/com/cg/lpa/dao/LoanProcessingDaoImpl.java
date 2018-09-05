@@ -29,7 +29,7 @@ public class LoanProcessingDaoImpl implements ILoanProcessingDao {
 
 		try {
 			conn = DBUtil.establishConnection();
-			pstmt = conn.prepareStatement(IQueryMapper.GET_LOGIN_DETAILS);
+			pstmt = conn.prepareStatement(IQueryMapper.GET_USER_ROLE);
 			pstmt.setString(1, userId);
 			pstmt.setString(2, password);
 			rs = pstmt.executeQuery();
@@ -37,9 +37,9 @@ public class LoanProcessingDaoImpl implements ILoanProcessingDao {
 			while (rs.next()) {
 				type = rs.getString(1);
 			}
-			if ("1001".equals(type)) {
+			if ("admin".equals(type)) {
 				n = 1;
-			} else if ("2001".equals(type)) {
+			} else if ("lad".equals(type)) {
 				n = 0;
 			} else {
 				n = -1;

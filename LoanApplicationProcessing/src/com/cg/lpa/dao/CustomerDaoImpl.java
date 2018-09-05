@@ -66,7 +66,7 @@ public class CustomerDaoImpl implements ICustomerDao {
 	public boolean fillCustomerDetails(CustomerDetailsBean customer)
 			throws LoanProcessingException {
 
-		int status;
+		int status = 0;
 		try {
 
 			conn = DBUtil.establishConnection();
@@ -113,6 +113,27 @@ public class CustomerDaoImpl implements ICustomerDao {
 			throw new LoanProcessingException("Error in " + e.getMessage());
 		}
 		return applicationStatus;
+	}
+
+	@Override
+	public boolean deleteLoanApplication(int applicationId)
+			throws LoanProcessingException {
+		int status = 0;
+		try {
+			conn = DBUtil.establishConnection();
+			pstmt = conn
+					.prepareStatement(" DELETE FROM loan_application WHERE application_id = ? ");
+			pstmt.setInt(1, applicationId);
+			status = pstmt.executeUpdate();
+			if (status == 1) {
+				return true;
+			}
+
+		} catch (SQLException e) {
+			throw new LoanProcessingException("Error in " + e.getMessage());
+		}
+
+		return false;
 	}
 
 }

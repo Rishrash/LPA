@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import com.cg.lpa.bean.ApprovedLoanBean;
 import com.cg.lpa.bean.CustomerDetailsBean;
 import com.cg.lpa.bean.LoanApplicationBean;
 import com.cg.lpa.bean.LoanProgramOfferedBean;
@@ -36,7 +37,6 @@ public class Main {
 	}
 
 	// START METHOD
-
 	private static void startTheProgram() throws LoanProcessingException {
 
 		System.out.println("Welcome To Loan Processing Application\n\n");
@@ -45,16 +45,16 @@ public class Main {
 		System.out.println("2. Login as Member Of Approval Department or Admin");
 		System.out.println("3. Exit");
 
-		int userInput = input.nextInt();
+		String userInput = input.next();
 
 		switch (userInput) {
-		case 1:
+		case "1":
 			enteredAsCustomer();
 			break;
-		case 2:
+		case "2":
 			loginUser();
 			break;
-		case 3:
+		case "3":
 			System.out.println("Have a Nice Day :-) ");
 			System.exit(0);
 		default:
@@ -70,21 +70,34 @@ public class Main {
 		input = new Scanner(System.in);
 		System.out.print("UserId : ");
 		String userId = input.next();
+		while (!loanProcessingService.isValidUserId(userId)) {
+			System.err.println("UserId Should contain only numbers and should be of length 4 ");
+			System.out.print("UserId : ");
+			userId = input.next();
+		}
 		System.out.print("Password : ");
 		String password = input.next();
+		while (!loanProcessingService.isValidPassword(password)) {
+			System.err.println("Password should be less than 10 characters and should not contain spaces");
+			System.out.print("Password : ");
+			password = input.next();
+		}
 
 		try {
 			if (loanProcessingService.loginUser(userId, password) == 0) {
+
 				// Enter As Member of Loan Approval Board
 				enteredAsMemberOfBoard();
 
 			} else if (loanProcessingService.loginUser(userId, password) == 1) {
+
 				// Enter As Admin
 				enteredAsAdmin();
 
 			} else {
+
 				// Incorrect Password
-				System.out.println("Password is wrong");
+				System.out.println("UserID or Password is wrong");
 
 			}
 		} catch (LoanProcessingException e) {
@@ -95,9 +108,7 @@ public class Main {
 	}
 
 	// ================================================================
-	// = =
 	// = 1. When User has Entered As a Customer
-	// =
 	// ================================================================
 
 	private static void enteredAsCustomer() {
@@ -109,25 +120,37 @@ public class Main {
 		System.out.println("4. Previous Page");
 		System.out.println("5. Exit");
 		try {
+			loanProcessingService = new LoanProcessingServiceImpl();
 			customerService = new CustomerServiceImpl();
-			int customerChoice = input.nextInt();
+			String customerChoice = input.next();
 			switch (customerChoice) {
 
 			// View loan Programs
-			case 1:
+			case "1":
 				if (displayLoanPrograms()) {
 					System.out.println("No Record Found");
 				}
 				break;
-			case 2:
+			case "2":
 
 				System.out.println("Fill Loan Application Form:");
 
 				System.out.println("Enter Loan Program Name");
 				String loanProgram = input.next();
+				while (!loanProcessingService.isValidString(loanProgram)) {
+					System.err.println("Should contain a minimum of 5 Characters");
+					System.out.println("Enter Loan Program Name");
+					loanProgram = input.next();
+				}
 
 				System.out.println("Enter Loan Amount");
-				double loanAmount = input.nextDouble();
+				String loanAmountString = input.next();
+				while (!loanProcessingService.isValidDouble(loanAmountString)) {
+					System.err.println("Not a valid amount");
+					System.out.println("Enter Loan Amount");
+					loanAmountString = input.next();
+				}
+				double loanAmount = Double.parseDouble(loanAmountString);
 
 				System.out.println("Enter your Property Address");
 				String propertyAddress = inputString.nextLine();
@@ -158,11 +181,11 @@ public class Main {
 					System.out.println("Enter your Full Name");
 					String applicantName = inputString.nextLine();
 
-					System.out.println("Input Date Of Birth in dd-mm-yyyy Format");
+					System.out.println("Input Date Of Birth in dd-MMM-yyyy Format");
 					String dateOfBirth = input.next();
 					// DateTimeFormatter formatter = DateTimeFormatter
-					// .ofPattern("dd-mm-yyyy");
-					// LocalDate dateOfBirth = LocalDate.parse(date, formatter);
+					// .ofPattern("dd-MMM-yyyy");
+					// LocalDate dateOfBirth = LocalDate.parse(dob, formatter);
 
 					System.out.println("Maritial Status");
 					String maritalStatus = input.next();
@@ -173,7 +196,7 @@ public class Main {
 					System.out.println("Enter your Mobile Number");
 					long mobileNumber = input.nextLong();
 
-					System.out.println("What is your Dependents Count ?");
+					System.out.println("What is your Dependants Count ?");
 					int dependentsCount = input.nextInt();
 
 					System.out.println("Enter your Email ID");
@@ -186,6 +209,8 @@ public class Main {
 					if (status == true) {
 						System.out.println("You successfully filled your Personal Details");
 					} else {
+						// Rollback Application
+						customerService.deleteLoanApplication(applicationId);
 						System.out.println("There was some problem in filling your Personal Details");
 					}
 				} else {
@@ -193,7 +218,7 @@ public class Main {
 				}
 
 				break;
-			case 3:
+			case "3":
 
 				System.out.println("Enter your Application Id");
 				int applicationId = input.nextInt();
@@ -201,10 +226,10 @@ public class Main {
 				String applicationStatusString = customerService.viewApplicationStatus(applicationId);
 				System.out.println("Your status is : " + applicationStatusString);
 				break;
-			case 4:
+			case "4":
 				startTheProgram();
 				break;
-			case 5:
+			case "5":
 				System.out.println("Have a Nice Day :-) ");
 				System.exit(0);
 			default:
@@ -220,10 +245,8 @@ public class Main {
 	}
 
 	// ================================================================
-	// =
 	// = 2. When User has Entered As
-	// = ...Member Of Approval Department
-	// =
+	// = Member Of Approval Department
 	// ================================================================
 	private static void enteredAsMemberOfBoard() {
 		System.out.println("Welcome Member Of Loan Approval Department\n");
@@ -235,41 +258,23 @@ public class Main {
 		System.out.println("5. Exit");
 		try {
 			ladService = new LoanApprovalDeptServiceImpl();
-			int ladchoice = input.nextInt();
+			String ladchoice = input.next();
 			switch (ladchoice) {
-			case 1:
+			case "1":
 				if (displayLoanPrograms()) {
 					System.out.println("No Record Found");
 				}
 				break;
-			case 2:
-				System.out.println("Choose a Loan Program :-");
-				System.out.println("1. HomeL");
-				System.out.println("2. EduL");
-				System.out.println("3. CarL");
-				int choice = input.nextInt();
-				String loanProgram = null;
-				switch (choice) {
-				case 1:
-					loanProgram = "HomeL";
-					break;
-				case 2:
-					loanProgram = "EduL";
-					break;
-				case 3:
-					loanProgram = "CarL";
-					break;
-				default:
-					System.out.println("Invalid choice");
-					enteredAsMemberOfBoard();
-				}
+			case "2":
+				System.out.println("Enter a Loan Program");
+				String loanProgram = inputString.nextLine();
 
 				if (displayLoanApplication(loanProgram)) {
 					System.out.println("No Record Found");
 				}
 
 				break;
-			case 3:
+			case "3":
 				int applicationId = 0;
 				String newStatus = null;
 				System.out.println("Enter application id to update application status");
@@ -278,15 +283,15 @@ public class Main {
 				System.out.println("1. Accepted");
 				System.out.println("2. Approved");
 				System.out.println("3. Rejected");
-				int statusChoice = input.nextInt();
+				String statusChoice = input.next();
 				switch (statusChoice) {
-				case 1:
+				case "1":
 					newStatus = "Accepted";
 					break;
-				case 2:
+				case "2":
 					newStatus = "Approved";
 					break;
-				case 3:
+				case "3":
 					newStatus = "Rejected";
 					break;
 				default:
@@ -297,14 +302,49 @@ public class Main {
 				if (isStatusUpdated == true) {
 					System.out.println(
 							"Application status for application id " + applicationId + " was successfully updated");
+					if (newStatus == "Approved") {
+						System.out.println("Fill Approved Loan Record Details");
+						int applicationID = applicationId;
+						String applicantName = ladService.getApplicantName(applicationId);
+						// System.out.println("Enter Loan Amount Granted :- ");
+						double loanAmountGranted = ladService.getLoanAmountGranted(applicationId);
+
+						System.out.println("Enter Monthly Installments");
+						double monthlyInstallments = input.nextDouble();
+
+						// System.out.println("Enter Loan Time Period in Years");
+						int yearsTimePeriod = ladService.getLoanDurationInYears(applicationId);
+
+						System.out.println("Enter DownPayment to be given");
+						double downPayment = input.nextDouble();
+
+						// System.out.println("Enter Rate Of Interest");
+						double rateOfInterest = ladService.getRateOfInterest(applicationId);
+
+						System.out.println("Enter Total Payable Amount");
+						double totalAmountPayable = input.nextDouble();
+
+						ApprovedLoanBean approvedLoan = new ApprovedLoanBean(applicationID, applicantName,
+								loanAmountGranted, monthlyInstallments, yearsTimePeriod, downPayment, rateOfInterest,
+								totalAmountPayable);
+
+						boolean isCustomerAdded = ladService.fillApprovedLoanDetails(approvedLoan);
+						if (isCustomerAdded) {
+							System.out.println("Loan is successfully Approved for Application ID : " + applicationId);
+						} else {
+							System.out.println(
+									"There was Some problem in approving loan for Application Id : " + applicationId);
+						}
+
+					}
 				} else {
 					System.out.println("There was a problem in updating application status");
 				}
 				break;
-			case 4:
+			case "4":
 				startTheProgram();
 				break;
-			case 5:
+			case "5":
 				System.out.println("Have a Nice Day :-) ");
 				System.exit(0);
 
@@ -357,20 +397,21 @@ public class Main {
 		System.out.println("5. Exit");
 		try {
 			adminService = new AdminServiceImpl();
-			int adminChoice = input.nextInt();
+			ladService = new LoanApprovalDeptServiceImpl();
+			String adminChoice = input.next();
 			switch (adminChoice) {
-			case 1:
+			case "1":
 				if (displayLoanPrograms()) {
 					System.out.println("No Record Found");
 				}
 				break;
-			case 2:
+			case "2":
 				System.out.println("Select option :-");
 				System.out.println("1. Add a Loan Program");
 				System.out.println("2. Delete a Loan Program");
-				int loanProgramUpdateChoice = input.nextInt();
+				String loanProgramUpdateChoice = input.next();
 				switch (loanProgramUpdateChoice) {
-				case 1:
+				case "1":
 					System.out.println("Enter Loan Program Name");
 					String loanProgramString = input.next();
 					System.out.println("Enter Loan Program Description");
@@ -391,43 +432,65 @@ public class Main {
 					LoanProgramOfferedBean newLoanProgram = new LoanProgramOfferedBean(loanProgramString, description,
 							loanType, durationInYears, minLoanAmnt, maxLoanAmnt, rateOfIntrest, proofReq);
 
-					boolean b = adminService.addLoanProgram(newLoanProgram);
-					if (b) {
-						System.out.println("YEaaah");
+					boolean isLoanProgramAdded = adminService.addLoanProgram(newLoanProgram);
+					if (isLoanProgramAdded) {
+						System.out.println("Loan Program Added Successfully");
 					} else {
-						System.out.println("Nooooo");
+						System.out.println("There was Some Problem in Adding Loan Program");
 					}
 					break;
-				case 2:
-					// adminService.deleteLoanProgram(loanProgram);
+				case "2":
+					System.out.println("Enter Loan Program name to be Deleted");
+					String loanProgram = inputString.nextLine();
+
+					if (isLoanProgramAlreadyExisting(loanProgram)) {
+						System.out
+								.println("This Loan Program Cannot be deleted as it exists in Loan Application table");
+					} else {
+						boolean isLoanProgramDeleted = adminService.deleteLoanProgram(loanProgram);
+						if (isLoanProgramDeleted) {
+							System.out.println("Loan Program Deleted Successfully");
+						} else {
+							System.out.println("There was some Problem in deleting Loan Program");
+						}
+
+					}
+
 					break;
 				default:
 					System.out.println("Invalid Choice ");
 					enteredAsAdmin();
 				}
 				break;
-			case 3:
+			case "3":
 				System.out.println("1. View Loan Applications for Accepted Loan");
 				System.out.println("2. View Loan Applicatoins for Approved Loan");
-				ArrayList<LoanApplicationBean> loanApplication = null;
+				ArrayList<LoanApplicationBean> loanApplicationList = null;
 				String loanApplicationStatus = null;
-				int loanApplicationStatusChoice = input.nextInt();
+				String loanApplicationStatusChoice = input.next();
 				switch (loanApplicationStatusChoice) {
-				case 1:
+				case "1":
 					loanApplicationStatus = "Accepted";
 					break;
-				case 2:
+				case "2":
 					loanApplicationStatus = "Approved";
 					break;
 				default:
 					System.out.println("Invalid Choice ");
 					enteredAsAdmin();
 				}
-				loanApplication = adminService.viewLoanApplicationForSpecificStatus(loanApplicationStatus);
+				loanApplicationList = adminService.viewLoanApplicationForSpecificStatus(loanApplicationStatus);
+				if (loanApplicationList.isEmpty()) {
+					System.out.println("No Record Found");
+				} else {
+					for (LoanApplicationBean loanApplication : loanApplicationList) {
+						System.out.println(loanApplication);
+					}
+				}
 				break;
-			case 4:
+			case "4":
 				startTheProgram();
-			case 5:
+			case "5":
 				System.out.println("Have a Nice Day :-) ");
 				System.exit(0);
 				break;
@@ -436,12 +499,31 @@ public class Main {
 				enteredAsAdmin();
 
 			}
+			enteredAsAdmin();
 		} catch (InputMismatchException e) {
 			System.err.println("Error is in :" + e.getMessage());
 		} catch (Exception e) {
 			System.err.println("Error is in :" + e.getMessage());
 
 		}
+
+	}
+
+	// METHOD TO CHECK IF LOAN PROGRAM IS EXISTING IN LOAN APPLICATION TABLE
+	public static boolean isLoanProgramAlreadyExisting(String loanProgram) throws LoanProcessingException {
+		ArrayList<LoanApplicationBean> loanApplicationList = null;
+		try {
+			loanApplicationList = ladService.viewLoanApplicationForSpecificProgram(loanProgram);
+
+			if (loanApplicationList.isEmpty()) {
+
+				return false;
+			}
+
+		} catch (LoanProcessingException e) {
+			System.err.println("Error is " + e.getMessage());
+		}
+		return true;
 
 	}
 

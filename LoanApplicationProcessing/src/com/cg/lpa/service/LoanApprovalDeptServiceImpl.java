@@ -2,6 +2,7 @@ package com.cg.lpa.service;
 
 import java.util.ArrayList;
 
+import com.cg.lpa.bean.ApprovedLoanBean;
 import com.cg.lpa.bean.LoanApplicationBean;
 import com.cg.lpa.dao.ILoanApprovalDeptDao;
 import com.cg.lpa.dao.LoanApprovalDeptDaoImpl;
@@ -24,6 +25,41 @@ public class LoanApprovalDeptServiceImpl implements ILoanApprovalDeptService {
 		ladDao = new LoanApprovalDeptDaoImpl();
 
 		return ladDao.modifyApplicationStatus(applicationId, newStatus);
+	}
+
+	@Override
+	public String getApplicantName(int applicationId)
+			throws LoanProcessingException {
+		ladDao = new LoanApprovalDeptDaoImpl();
+		return ladDao.getApplicantName(applicationId);
+	}
+
+	@Override
+	public boolean fillApprovedLoanDetails(ApprovedLoanBean approvedLoan)
+			throws LoanProcessingException {
+		ladDao = new LoanApprovalDeptDaoImpl();
+		return ladDao.fillApprovedLoanDetails(approvedLoan);
+	}
+
+	@Override
+	public double getLoanAmountGranted(int applicationId)
+			throws LoanProcessingException {
+		ladDao = new LoanApprovalDeptDaoImpl();
+		return ladDao.getLoanAmountGranted(applicationId);
+	}
+
+	@Override
+	public double getRateOfInterest(int applicationId)
+			throws LoanProcessingException {
+		ladDao = new LoanApprovalDeptDaoImpl();
+		return ladDao.getRateOfInterest(applicationId);
+	}
+
+	@Override
+	public int getLoanDurationInYears(int applicationId)
+			throws LoanProcessingException {
+		ladDao = new LoanApprovalDeptDaoImpl();
+		return ladDao.getLoanDurationInYears(applicationId);
 	}
 
 }

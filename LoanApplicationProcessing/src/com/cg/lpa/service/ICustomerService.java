@@ -20,4 +20,7 @@ public interface ICustomerService {
 	public String viewApplicationStatus(int applicationID)
 			throws LoanProcessingException;
 
+	public boolean deleteLoanApplication(int applicationId)
+			throws LoanProcessingException;
+
 }

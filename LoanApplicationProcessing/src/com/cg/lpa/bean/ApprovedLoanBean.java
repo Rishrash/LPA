@@ -78,6 +78,19 @@ public class ApprovedLoanBean {
 	public ApprovedLoanBean() {
 	}
 
+	public ApprovedLoanBean(int applicationId, double loanAmountGranted,
+			double monthlyInstallments, int yearsTimePeriod,
+			double downPayment, double rateOfInterest, double totalAmountPayable) {
+		super();
+		this.applicationId = applicationId;
+		this.loanAmountGranted = loanAmountGranted;
+		this.monthlyInstallments = monthlyInstallments;
+		this.yearsTimePeriod = yearsTimePeriod;
+		this.downPayment = downPayment;
+		this.rateOfInterest = rateOfInterest;
+		this.totalAmountPayable = totalAmountPayable;
+	}
+
 	public ApprovedLoanBean(int applicationId, String applicantName,
 			double loanAmountGranted, double monthlyInstallments,
 			int yearsTimePeriod, double downPayment, double rateOfInterest,

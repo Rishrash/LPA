@@ -27,10 +27,17 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public String viewApplicationStatus(int applicationID)
 			throws LoanProcessingException {
-		// TODO Auto-generated method stub
+
 		customerDao = new CustomerDaoImpl();
 		return customerDao.viewApplicationStatus(applicationID);
 
+	}
+
+	@Override
+	public boolean deleteLoanApplication(int applicationId)
+			throws LoanProcessingException {
+		customerDao = new CustomerDaoImpl();
+		return customerDao.deleteLoanApplication(applicationId);
 	}
 
 }

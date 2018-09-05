@@ -13,6 +13,9 @@ public interface ICustomerDao {
 			throws LoanProcessingException;
 
 	public String viewApplicationStatus(int applicationID)
-			throws LoanProcessingException;;
+			throws LoanProcessingException;
+
+	public boolean deleteLoanApplication(int applicationId)
+			throws LoanProcessingException;
 
 }

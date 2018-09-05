@@ -1,9 +1,11 @@
 package com.cg.lpa.bean;
 
+import java.time.LocalDate;
+
 public class LoanApplicationBean {
 
 	private int applicationId;
-	private String applicationDate;
+	private LocalDate applicationDate;
 	private String loanProgram;
 	private double loanAmount;
 	private String propertyAddress;
@@ -12,7 +14,7 @@ public class LoanApplicationBean {
 	private String guaranteeCover;
 	private double marktValOfCover;
 	private String status;
-	private String interviewDate;
+	private LocalDate interviewDate;
 
 	public int getApplicationId() {
 		return applicationId;
@@ -22,11 +24,11 @@ public class LoanApplicationBean {
 		this.applicationId = applicationId;
 	}
 
-	public String getApplicationDate() {
+	public LocalDate getApplicationDate() {
 		return applicationDate;
 	}
 
-	public void setApplicationDate(String applicationDate) {
+	public void setApplicationDate(LocalDate applicationDate) {
 		this.applicationDate = applicationDate;
 	}
 
@@ -94,11 +96,11 @@ public class LoanApplicationBean {
 		this.status = status;
 	}
 
-	public String getInterviewDate() {
+	public LocalDate getInterviewDate() {
 		return interviewDate;
 	}
 
-	public void setInterviewDate(String interviewDate) {
+	public void setInterviewDate(LocalDate interviewDate) {
 		this.interviewDate = interviewDate;
 	}
 
@@ -120,10 +122,10 @@ public class LoanApplicationBean {
 
 	}
 
-	public LoanApplicationBean(int applicationId, String applicationDate,
+	public LoanApplicationBean(int applicationId, LocalDate applicationDate,
 			String loanProgram, double loanAmount, String propertyAddress,
 			double annualFamilyIncome, String docsProof, String guaranteeCover,
-			double marktValOfCover, String status, String interviewDate) {
+			double marktValOfCover, String status, LocalDate interviewDate) {
 		super();
 		this.applicationId = applicationId;
 		this.applicationDate = applicationDate;
