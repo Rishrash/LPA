@@ -125,6 +125,23 @@ public class LoanApplicationBean {
 	public LoanApplicationBean(int applicationId, LocalDate applicationDate,
 			String loanProgram, double loanAmount, String propertyAddress,
 			double annualFamilyIncome, String docsProof, String guaranteeCover,
+			double marktValOfCover, String status) {
+		super();
+		this.applicationId = applicationId;
+		this.applicationDate = applicationDate;
+		this.loanProgram = loanProgram;
+		this.loanAmount = loanAmount;
+		this.propertyAddress = propertyAddress;
+		this.annualFamilyIncome = annualFamilyIncome;
+		this.docsProof = docsProof;
+		this.guaranteeCover = guaranteeCover;
+		this.marktValOfCover = marktValOfCover;
+		this.status = status;
+	}
+
+	public LoanApplicationBean(int applicationId, LocalDate applicationDate,
+			String loanProgram, double loanAmount, String propertyAddress,
+			double annualFamilyIncome, String docsProof, String guaranteeCover,
 			double marktValOfCover, String status, LocalDate interviewDate) {
 		super();
 		this.applicationId = applicationId;
@@ -142,14 +159,18 @@ public class LoanApplicationBean {
 
 	@Override
 	public String toString() {
-		return "LoanApplicationBean [applicationId=" + applicationId
-				+ ", applicationDate=" + applicationDate + ", loanProgram="
-				+ loanProgram + ", loanAmount=" + loanAmount
-				+ ", propertyAddress=" + propertyAddress
-				+ ", annualFamilyIncome=" + annualFamilyIncome + ", docsProof="
-				+ docsProof + ", guaranteeCoverString=" + guaranteeCover
-				+ ", marktValOfCover=" + marktValOfCover + ", status=" + status
-				+ ", interviewDate=" + interviewDate + "]";
+		return "Application Id        :" + applicationId
+				+ "\nApplication Date      :" + applicationDate
+				+ "\nLoan Program          :" + loanProgram
+				+ "\nLoan Amount           :" + loanAmount
+				+ "\nProperty Address      :" + propertyAddress
+				+ "\nAnnual Family Income  :" + annualFamilyIncome
+				+ "\nDocument Proof        :" + docsProof
+				+ "\nGuarantee Cover       :" + guaranteeCover
+				+ "\nMarket Value Of Cover :" + marktValOfCover
+				+ "\nApplication Status    :" + status
+				+ "\nInterview Date        :" + interviewDate
+				+ "\n......................................................";
 	}
 
 }

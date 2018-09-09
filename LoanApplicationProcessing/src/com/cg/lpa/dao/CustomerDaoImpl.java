@@ -9,7 +9,7 @@ import java.sql.Statement;
 import com.cg.lpa.bean.CustomerDetailsBean;
 import com.cg.lpa.bean.LoanApplicationBean;
 import com.cg.lpa.dbutil.DBUtil;
-import com.cg.lpa.test.LoanProcessingException;
+import com.cg.lpa.exception.LoanProcessingException;
 
 public class CustomerDaoImpl implements ICustomerDao {
 	LoanApplicationBean loanApplication = null;

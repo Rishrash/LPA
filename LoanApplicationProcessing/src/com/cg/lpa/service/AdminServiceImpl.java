@@ -2,11 +2,12 @@ package com.cg.lpa.service;
 
 import java.util.ArrayList;
 
+import com.cg.lpa.bean.ApprovedLoanBean;
 import com.cg.lpa.bean.LoanApplicationBean;
 import com.cg.lpa.bean.LoanProgramOfferedBean;
 import com.cg.lpa.dao.AdminDaoImpl;
 import com.cg.lpa.dao.IAdminDao;
-import com.cg.lpa.test.LoanProcessingException;
+import com.cg.lpa.exception.LoanProcessingException;
 
 public class AdminServiceImpl implements IAdminService {
 	IAdminDao adminDao = null;
@@ -32,6 +33,13 @@ public class AdminServiceImpl implements IAdminService {
 		adminDao = new AdminDaoImpl();
 
 		return adminDao.viewLoanApplicationForSpecificStatus(status);
+	}
+
+	@Override
+	public ArrayList<ApprovedLoanBean> viewApprovedLoan()
+			throws LoanProcessingException {
+		adminDao = new AdminDaoImpl();
+		return adminDao.viewApprovedLoan();
 	}
 
 }

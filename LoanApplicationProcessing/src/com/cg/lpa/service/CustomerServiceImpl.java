@@ -4,7 +4,7 @@ import com.cg.lpa.bean.CustomerDetailsBean;
 import com.cg.lpa.bean.LoanApplicationBean;
 import com.cg.lpa.dao.CustomerDaoImpl;
 import com.cg.lpa.dao.ICustomerDao;
-import com.cg.lpa.test.LoanProcessingException;
+import com.cg.lpa.exception.LoanProcessingException;
 
 public class CustomerServiceImpl implements ICustomerService {
 	ICustomerDao customerDao = null;

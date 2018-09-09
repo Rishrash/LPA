@@ -2,9 +2,10 @@ package com.cg.lpa.dao;
 
 import java.util.ArrayList;
 
+import com.cg.lpa.bean.ApprovedLoanBean;
 import com.cg.lpa.bean.LoanApplicationBean;
 import com.cg.lpa.bean.LoanProgramOfferedBean;
-import com.cg.lpa.test.LoanProcessingException;
+import com.cg.lpa.exception.LoanProcessingException;
 
 public interface IAdminDao {
 	public boolean addLoanProgram(LoanProgramOfferedBean loanProgram)
@@ -15,5 +16,8 @@ public interface IAdminDao {
 
 	public ArrayList<LoanApplicationBean> viewLoanApplicationForSpecificStatus(
 			String status) throws LoanProcessingException;
+
+	public ArrayList<ApprovedLoanBean> viewApprovedLoan()
+			throws LoanProcessingException;
 
 }

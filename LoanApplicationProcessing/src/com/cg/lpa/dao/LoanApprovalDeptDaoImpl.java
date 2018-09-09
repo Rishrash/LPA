@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import com.cg.lpa.bean.ApprovedLoanBean;
 import com.cg.lpa.bean.LoanApplicationBean;
 import com.cg.lpa.dbutil.DBUtil;
-import com.cg.lpa.test.LoanProcessingException;
+import com.cg.lpa.exception.LoanProcessingException;
 
 public class LoanApprovalDeptDaoImpl implements ILoanApprovalDeptDao {
 	Connection conn = null;
@@ -192,5 +192,22 @@ public class LoanApprovalDeptDaoImpl implements ILoanApprovalDeptDao {
 			throw new LoanProcessingException("Error in " + e.getMessage());
 		}
 		return yearsTimePeriod;
+	}
+
+	@Override
+	public boolean setInterviewDate(int applicationId)
+			throws LoanProcessingException {
+		try {
+			conn = DBUtil.establishConnection();
+			pstmt = conn.prepareStatement(IQueryMapper.UPDATE_INTERVIEW_DATE);
+			pstmt.setInt(1, applicationId);
+			int status = pstmt.executeUpdate();
+			if (status == 1) {
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			throw new LoanProcessingException("Error in " + e.getMessage());
+		}
 	}
 }

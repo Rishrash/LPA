@@ -2,7 +2,7 @@ package com.cg.lpa.service;
 
 import com.cg.lpa.bean.CustomerDetailsBean;
 import com.cg.lpa.bean.LoanApplicationBean;
-import com.cg.lpa.test.LoanProcessingException;
+import com.cg.lpa.exception.LoanProcessingException;
 
 public interface ICustomerService {
 

@@ -6,7 +6,7 @@ import com.cg.lpa.bean.ApprovedLoanBean;
 import com.cg.lpa.bean.LoanApplicationBean;
 import com.cg.lpa.dao.ILoanApprovalDeptDao;
 import com.cg.lpa.dao.LoanApprovalDeptDaoImpl;
-import com.cg.lpa.test.LoanProcessingException;
+import com.cg.lpa.exception.LoanProcessingException;
 
 public class LoanApprovalDeptServiceImpl implements ILoanApprovalDeptService {
 	ILoanApprovalDeptDao ladDao = null;
@@ -60,6 +60,13 @@ public class LoanApprovalDeptServiceImpl implements ILoanApprovalDeptService {
 			throws LoanProcessingException {
 		ladDao = new LoanApprovalDeptDaoImpl();
 		return ladDao.getLoanDurationInYears(applicationId);
+	}
+
+	@Override
+	public boolean setInterviewDate(int applicationId)
+			throws LoanProcessingException {
+		ladDao = new LoanApprovalDeptDaoImpl();
+		return ladDao.setInterviewDate(applicationId);
 	}
 
 }

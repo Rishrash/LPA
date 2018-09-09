@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.cg.lpa.bean.ApprovedLoanBean;
 import com.cg.lpa.bean.LoanApplicationBean;
-import com.cg.lpa.test.LoanProcessingException;
+import com.cg.lpa.exception.LoanProcessingException;
 
 public interface ILoanApprovalDeptService {
 
@@ -33,6 +33,9 @@ public interface ILoanApprovalDeptService {
 			throws LoanProcessingException;
 
 	public int getLoanDurationInYears(int applicationId)
+			throws LoanProcessingException;
+
+	public boolean setInterviewDate(int applicationId)
 			throws LoanProcessingException;
 
 }

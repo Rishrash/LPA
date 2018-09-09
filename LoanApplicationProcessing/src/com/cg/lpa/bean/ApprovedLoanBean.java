@@ -108,13 +108,15 @@ public class ApprovedLoanBean {
 
 	@Override
 	public String toString() {
-		return "ApprovedLoanBean [applicationId=" + applicationId
-				+ ", applicantName=" + applicantName + ", loanAmountGranted="
-				+ loanAmountGranted + ", monthlyInstallments="
-				+ monthlyInstallments + ", yearsTimePeriod=" + yearsTimePeriod
-				+ ", downPayment=" + downPayment + ", rateOfInterest="
-				+ rateOfInterest + ", totalAmountPayable=" + totalAmountPayable
-				+ "]";
+		return "Application Id       :" + applicationId
+				+ "\nApplicant Name       :" + applicantName
+				+ "\nLoan Amount Granted  :" + loanAmountGranted
+				+ "\nMonthly Installments :" + monthlyInstallments
+				+ "\nYears Time Period    :" + yearsTimePeriod
+				+ "\nDown Payment         :" + downPayment
+				+ "\nRate Of Interest     :" + rateOfInterest
+				+ "\nTotal Amount Payable :" + totalAmountPayable
+				+ "\n..................................................";
 	}
 
 }

@@ -9,11 +9,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import com.cg.lpa.bean.ApprovedLoanBean;
 import com.cg.lpa.bean.CustomerDetailsBean;
 import com.cg.lpa.bean.LoanApplicationBean;
 import com.cg.lpa.bean.LoanProgramOfferedBean;
 import com.cg.lpa.dbutil.DBUtil;
-import com.cg.lpa.test.LoanProcessingException;
+import com.cg.lpa.exception.LoanProcessingException;
 
 public class AdminDaoImpl implements IAdminDao {
 	LoanApplicationBean loanApplication = null;
@@ -107,5 +108,28 @@ public class AdminDaoImpl implements IAdminDao {
 		}
 
 		return loanApplicationList;
+	}
+
+	@Override
+	public ArrayList<ApprovedLoanBean> viewApprovedLoan()
+			throws LoanProcessingException {
+		ArrayList<ApprovedLoanBean> approvedLoanList = new ArrayList<ApprovedLoanBean>();
+		try {
+			conn = DBUtil.establishConnection();
+			pstmt = conn.prepareStatement(IQueryMapper.GET_APPROVED_LOANS);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				ApprovedLoanBean approvedLoan = new ApprovedLoanBean(
+						rs.getInt(1), rs.getString(2), rs.getDouble(3),
+						rs.getDouble(4), rs.getInt(5), rs.getDouble(6),
+						rs.getDouble(7), rs.getDouble(8));
+				approvedLoanList.add(approvedLoan);
+			}
+
+		} catch (SQLException e) {
+			throw new LoanProcessingException("Error in " + e.getMessage());
+		}
+
+		return approvedLoanList;
 	}
 }

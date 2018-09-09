@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import com.cg.lpa.bean.LoanProgramOfferedBean;
 import com.cg.lpa.bean.UserBean;
 import com.cg.lpa.dbutil.DBUtil;
-import com.cg.lpa.test.LoanProcessingException;
+import com.cg.lpa.exception.LoanProcessingException;
 
 public class LoanProcessingDaoImpl implements ILoanProcessingDao {
 	UserBean user = new UserBean();
@@ -33,7 +33,7 @@ public class LoanProcessingDaoImpl implements ILoanProcessingDao {
 			pstmt.setString(1, userId);
 			pstmt.setString(2, password);
 			rs = pstmt.executeQuery();
-			rs = pstmt.executeQuery();
+
 			while (rs.next()) {
 				type = rs.getString(1);
 			}

@@ -98,12 +98,15 @@ public class LoanProgramOfferedBean {
 
 	@Override
 	public String toString() {
-		return "LoanProgramOfferedBean [loanProgramString=" + loanProgramString
-				+ ", description=" + description + ", loanType=" + loanType
-				+ ", durationInYears=" + durationInYears + ", minLoanAmnt="
-				+ minLoanAmnt + ", maxLoanAmnt=" + maxLoanAmnt
-				+ ", rateOfIntrest=" + rateOfIntrest + ", proofReq=" + proofReq
-				+ "]";
+		return "Loan Program        :" + loanProgramString
+				+ "\nDescription         :" + description
+				+ "\nLoan Type           :" + loanType
+				+ "\nDuration In Years   :" + durationInYears
+				+ "\nMinimum Loan Amount :" + minLoanAmnt
+				+ "\nMaximum Loan Amount :" + maxLoanAmnt
+				+ "\nRate Of Intrest     :" + rateOfIntrest
+				+ "\nProof Required      :" + proofReq
+				+ "\n.......................................................";
 	}
 
 }
